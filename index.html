@@ -6,8 +6,30 @@
     <title>Telegram Mini App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+        /* Динамические цвета под тему Telegram */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+            transition: all 0.3s ease;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: var(--tg-theme-button-color, #50a8eb);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            border: none;
+            border-radius: 10px;
+        }
+
+        #user-data {
+            margin-top: 20px;
+            color: var(--tg-theme-text-color, #000000);
+        }
     </style>
 </head>
 <body>
@@ -17,10 +39,14 @@
 
 <script>
     const tg = window.Telegram.WebApp;
-    tg.expand(); // Разворачиваем приложение на весь экран
+    tg.expand();
+
+    // Применяем тему сразу при загрузке
+    document.body.style.backgroundColor = tg.themeParams.bg_color || '#ffffff';
+    document.body.style.color = tg.themeParams.text_color || '#000000';
 
     document.getElementById('btn').addEventListener('click', () => {
-        const user = tg.initDataUnsafe.user; // Данные пользователя
+        const user = tg.initDataUnsafe.user;
         const userDataDiv = document.getElementById('user-data');
 
         if (user) {
